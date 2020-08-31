@@ -19,12 +19,16 @@ def main():
     different = set(log_group_name_only) - set(lambda_functions_name)
 
     for item in sorted(different):
-        print(item)
+        print(f'/aws/lambda/{item}')
 
     print('-----')
     print(f'Log Group: {len(log_group_name_only)}')
     print(f'Lambda   : {len(lambda_functions_name)}')
     print(f'different: {len(different)}')
+
+    # 削除する
+    # delete_log_groups(list(different))
+
 
 def get_log_groups(token: str=None) -> List[Dict]:
     option = {
@@ -62,6 +66,13 @@ def convert(data: List[Dict], name: str) -> List[str]:
     みたいな特定のKeyの値だけのリストに変換する
     """
     return [x.get(name) for x in data]
+
+
+def delete_log_groups(log_groups: List[str]) -> None:
+    for item in log_groups:
+        cw_logs_client.delete_log_group(
+            logGroupName=f'/aws/lambda/{item}'
+        )
 
 
 if __name__ == "__main__":
