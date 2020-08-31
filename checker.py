@@ -26,7 +26,7 @@ def main():
     print(f'different: {len(different)}')
 
     # 削除する
-    delete_log_groups(list(different))
+    # delete_log_groups(list(different))
 
 
 def get_log_groups(token: str=None) -> List[Dict]:
